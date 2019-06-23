@@ -14,6 +14,9 @@ app.use(express.static(path.join(__dirname, 'face-api')));
 app.use(express.static(img_dir));
 app.use(express.static(path.join(__dirname, 'models')));
 
+// Stupid browsers and stupid favicon requirments 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 app.get('/', (req, res) => res.redirect('/whoAreYou'));
 app.get('/whoAreYou', (req, res) => res.sendFile(path.join(views_dir, 'who-are-you.html')));
 app.get('/whereMyPeopleAt', (req, res) => {

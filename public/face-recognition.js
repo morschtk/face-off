@@ -13,7 +13,9 @@ async function createFaceMatcher() {
       const descriptors = [];
       for (let i=0; i<imagesForTraining.length; i++) {
         const img = await faceapi.fetchImage(`${label}/${imagesForTraining[i]}`);
-        const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
+        const detections = await faceapi.detectSingleFace(img)
+                                  .withFaceLandmarks()
+                                  .withFaceDescriptor();
         // Should we resize these detections to the image size?
         descriptors.push(detections.descriptor);
       }

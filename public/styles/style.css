@@ -1,0 +1,58 @@
+/* I haven't wrote css as css in so long i forgot how paintful it was... */
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-wrapper {
+      display: flex;
+  }
+
+  #nav-mobile > li > a {
+    color: rgba(255,255,255,.5);
+  }
+
+  #nav-mobile > li:not(.active) > a:hover {
+    background-color: rgba(97,97,97, .3);
+    color: rgba(255,255,255,.8);
+  }
+
+  .active > a {
+      color: #fff !important;
+  }
+
+  #main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+
+  #loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #loader > span {
+    margin-top: 10px;
+  }
+
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #content {
+    display: none;
+  }
+  .brand-logo {
+    margin: 0px 10px;
+    position: relative !important;
+  }
