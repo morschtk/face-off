@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script defer src="face-api.min.js"></script>
+  <script defer src="video-matcher.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <title>Face Recognition</title>
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper grey darken-4">
+      <a href="#" class="brand-logo">Face Off</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#">who am i?</a></li>
+        <li class="active"><a href="who-are-you.html">who are you</a></li>
+        <li><a href="/whosTheStar">who the star</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div id="main-content" class="grey lighten-4">
+    <div id="loader">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-green-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <span>Just wait ok, I'm working on it...</span>
+    </div>
+    <div id="content">
+      <div style="position: relative" class="margin">
+        <div class="row">
+            <div class="col s12">
+              <div class="card">
+                <div class="card-image">
+                  <video src="avg_endgame.mov" width="1206" height="678" id="inputVideo" autoplay muted></video>
+                  <canvas id="canvas" class="overlay">
+                </div>
+                <div class="card-content">
+                  <div class="row" style="margin-bottom: 0px; padding: 10px;">
+                    <p>You want to do some creeping? Just upload your image and don't ask what I do with it after.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
