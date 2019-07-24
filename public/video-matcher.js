@@ -1,4 +1,5 @@
 let faceMatcher = null;
+let bitches = new Map();
 
 async function createFaceMatcher() {
   let theHomies = [];
@@ -50,19 +51,21 @@ async function onPlay(videoEl) {
                             .withFaceLandmarks()
                             .withFaceDescriptors();
 
-  console.log(detections);
-
   // resize detection and landmarks in case displayed videoEl is smaller than original size
   const resizedDetections = faceapi.resizeResults(detections, videoEl);
 
   resizedDetections.forEach(({ detection, descriptor }) => {
     // So what were doing here is passing the description for each face to the faceMatcher, which will return the label of the closest description it has in its bank.
     const label = faceMatcher.findBestMatch(descriptor).toString();
+    // console.log(label);
     const options = { label };
+    let personMeta = label.split('(')[0];
+    bitches.set(personMeta, (bitches.get(personMeta) || 0) + 1);
     const drawBox = new faceapi.draw.DrawBox(detection.box, options);
     drawBox.draw(canvas);
   });
   setTimeout(() => onPlay(videoEl));
+  // console.log(bitches);
 }
 
 $(document).ready(() => {
