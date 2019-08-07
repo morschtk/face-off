@@ -18,13 +18,14 @@ async function startVideo() {
 }
 
 video.addEventListener('play', () => {
-    const canvas = faceapi.createCanvasFromMedia(video);
-    $('.card-image').append(canvas);
-    const displaySize = {
-        width: video.width,
-        height: video.height
-    };
-    faceapi.matchDimensions(canvas, displaySize);
+    const canvas = $('#canvas').get(0);
+    // const canvas = faceapi.createCanvasFromMedia(video);
+    // $('.card-image').append(canvas);
+    // const displaySize = {
+    //     width: video.width,
+    //     height: video.height
+    // };
+    faceapi.matchDimensions(canvas, video);
 
     setInterval(async () => {
         // What is TinyFaceDetectorOptions
@@ -32,7 +33,7 @@ video.addEventListener('play', () => {
         const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
                                     .withFaceLandmarks()
                                     .withFaceExpressions();
-        const resizedDetections = faceapi.resizeResults(detections, displaySize);
+        const resizedDetections = faceapi.resizeResults(detections, video);
         canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height);
         // The faceMatcher is what finds the closest match not the actual api.
         // In this case the we dont need to loop through each dection to find best match.
