@@ -55,6 +55,13 @@ body {
     padding: 10px;
   }
 
+  .card-panel {
+    height: min-content;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   #content {
     display: none;
     width: 100%;
@@ -63,4 +70,28 @@ body {
   .brand-logo {
     margin: 0px 10px;
     position: relative !important;
+  }
+
+  .expressions {
+    margin: 0px; 
+    padding: 5px !important;
+  }
+
+  .who-am-i-content {
+    margin-bottom: 0px;
+    /* padding: 10px; */
+    display: flex;
+    justify-content: space-around;
+    min-height: 200px;
+  }
+
+  .who-am-i-meta {
+    display:flex;
+    flex-direction: column;
+    min-width: 200px;
+    /* justify-content: space-around; */
+  }
+
+  .who-am-i-meta > span {
+    padding: 5px;
   }

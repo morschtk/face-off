@@ -38,6 +38,20 @@
       <span>Just wait ok, I'm working on it...</span>
     </div>
     <div id="content">
+      <div style="position: relative;">
+        <div class="card-panel">
+          <p style="text-align: center;">"Are you feeling ok?" - Pink Floyd</p>
+          <ul style="text-align: center;">
+            <li>😡angry 😡</li>
+            <li>🤢disgusted 🤢</li>
+            <li>😰fearful 😰</li>
+            <li>😊happy 😊</li>
+            <li>😐neutral 😐</li>
+            <li>😔sad 😔</li>
+            <li>🙀surprised 🙀</li>
+          </ul>
+        </div>
+      </div>
       <div style="position: relative" class="margin">
         <div class="row">
             <div class="col s12">
@@ -47,8 +61,17 @@
                   <canvas id="canvas">
                 </div>
                 <div class="card-content">
-                  <div class="row" style="margin-bottom: 0px; padding: 10px;">
-                    <p>"Are you feeling ok?" - Pink Floyd</p>
+                  <!-- <p style="text-align: center;">"Are you feeling ok?" - Pink Floyd</p> -->
+                  <div class="who-am-i-content">
+                      <div class="who-am-i-meta">
+                        <span class="gender"></span>
+                        <span class="age"></span>
+                        <ul class="expressions"></ul>
+                      </div>
+                      <label style="display: flex;align-items: center;">
+                        <input type="checkbox" class="filled-in" onchange="onChangeHideBoundingBoxes(event)" />
+                        <span>Hide Bounding Boxes</span>
+                      </label>
                   </div>
                 </div>
               </div>
