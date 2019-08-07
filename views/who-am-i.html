@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script defer src="face-api.min.js"></script>
-  <script defer src="video-matcher.js"></script>
+  <script defer src="face-detection.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="styles/style.css">
-  <title>Face Recognition</title>
+  <title>Face Off</title>
 </head>
 <body>
   <nav>
     <div class="nav-wrapper grey darken-4">
       <a href="#" class="brand-logo">Face Off</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/whoAmI">who am i?</a></li>
+        <li class="active"><a href="/whoAmI">who am i?</a></li>
         <li><a href="/whoAreYou">who are you</a></li>
-        <li class="active"><a href="/whosTheStar">who the star</a></li>
+        <li><a href="/whosTheStar">who the star</a></li>
       </ul>
     </div>
   </nav>
@@ -43,14 +43,12 @@
             <div class="col s12">
               <div class="card">
                 <div class="card-image">
-                  <video src="avg_endgame.mov" width="1150" height="495" id="inputVideo" autoplay muted></video>
-                  <canvas id="canvas" class="overlay">
+                  <video id="video" width="720" height="560" autoplay muted></video>
+                  <!-- <canvas id="canvas" class="overlay"> -->
                 </div>
                 <div class="card-content">
                   <div class="row" style="margin-bottom: 0px; padding: 10px;">
-                    <button class="waves-effect waves-light btn" onclick="resetVideo()">Restart this bitch</button>
-                    <!-- <p>You want to do some creeping? Just upload your image and don't ask what I do with it after.</p> -->
-                    <ul class="mylist"></ul>
+                    <p>"Are you feeling ok?" - Pink Floyd</p>
                   </div>
                 </div>
               </div>

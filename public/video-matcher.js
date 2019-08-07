@@ -36,7 +36,10 @@ async function startThatShit() {
 
   faceMatcher = await createFaceMatcher();
   $('#loader').hide();
-  $('#content').show();
+  $('#content').css({
+    'display': 'flex',
+    'justify-content': 'center',
+  });
   onPlay($('#inputVideo').get(0));
 }
 

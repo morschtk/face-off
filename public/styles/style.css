@@ -31,6 +31,7 @@ body {
     justify-content: center;
     align-items: center;
     flex: 1;
+    overflow: auto;
   }
 
   #loader {
@@ -49,8 +50,15 @@ body {
     top: 0;
     left: 0;
   }
+  .card {
+    width: fit-content;
+    padding: 10px;
+  }
+
   #content {
     display: none;
+    width: 100%;
+    overflow: auto;
   }
   .brand-logo {
     margin: 0px 10px;

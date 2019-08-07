@@ -21,6 +21,7 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 app.get('/', (req, res) => res.redirect('/whoAreYou'));
 app.get('/whoAreYou', (req, res) => res.sendFile(path.join(views_dir, 'who-are-you.html')));
 app.get('/whosTheStar', (req, res) => res.sendFile(path.join(views_dir, 'whos-the-star.html')));
+app.get('/whoAmI', (req, res) => res.sendFile(path.join(views_dir, 'who-am-i.html')));
 app.get('/whereMyPeopleAt', (req, res) => {
     let labels = fs.readdirSync(img_dir);
     let theHomies = labels.map((label) => {

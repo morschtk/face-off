@@ -34,7 +34,10 @@ async function startThatShit() {
 
   faceMatcher = await createFaceMatcher();
   $('#loader').hide();
-  $('#content').show();
+  $('#content').css({
+    'display': 'flex',
+    'justify-content': 'center',
+  });
 }
 
 async function uploadImage(e) {
