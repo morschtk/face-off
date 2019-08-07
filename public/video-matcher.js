@@ -1,5 +1,6 @@
 let faceMatcher = null;
 let bitches = new Map();
+let videoTimer;
 
 async function createFaceMatcher() {
   let theHomies = [];
@@ -45,7 +46,7 @@ async function onPlay(videoEl) {
 
   const canvas = $('#canvas').get(0);
 
-  faceapi.matchDimensions(canvas, videoEl, true);
+  faceapi.matchDimensions(canvas, videoEl);
 
   const detections = await faceapi.detectAllFaces(videoEl)
                             .withFaceLandmarks()
@@ -60,12 +61,29 @@ async function onPlay(videoEl) {
     // console.log(label);
     const options = { label };
     let personMeta = label.split('(')[0];
-    bitches.set(personMeta, (bitches.get(personMeta) || 0) + 1);
+    if (bitches.has(personMeta)) {
+      const newVal = bitches.get(personMeta) + 1;
+      $(`.${personMeta.replace(' ', '')}`).text(`${personMeta}: ${newVal}`);
+      bitches.set(personMeta, newVal);
+    } else {
+      $('.mylist').append($("<li>").append($("<span>", {class: `${personMeta.replace(' ', '')}`}).text(`${personMeta}: ${1}`)))
+      bitches.set(personMeta, 1);
+    }
+    // bitches.set(personMeta, (bitches.get(personMeta) || 0) + 1);
     const drawBox = new faceapi.draw.DrawBox(detection.box, options);
     drawBox.draw(canvas);
   });
-  setTimeout(() => onPlay(videoEl));
+  videoTimer = setTimeout(() => onPlay(videoEl));
   // console.log(bitches);
+}
+
+async function resetVideo() {
+  const videoEl = $('#inputVideo').get(0);
+  clearInterval(videoTimer);
+  bitches = new Map();
+  videoEl.load();
+  $('.mylist').empty();
+  onPlay(videoEl);
 }
 
 $(document).ready(() => {
