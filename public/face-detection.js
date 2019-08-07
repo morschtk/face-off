@@ -34,17 +34,25 @@ function extractExpressions(expressions) {
   Object.keys(expressions).forEach(key => {
     const percent = expressions[key] * 100;
     if (percent > EXPRESSION_WEIGHT) {
-      finalExpressions.push(`${EXPRESSION_MAP[key]} ${key.toUpperCase()}: ${faceapi.round(percent, 2)}% ${EXPRESSION_MAP[key]}`)
+      finalExpressions.push([faceapi.round(percent, 2), `${EXPRESSION_MAP[key]} ${key.toUpperCase()}: ${faceapi.round(percent, 2)}% ${EXPRESSION_MAP[key]}`])
     }
+  });
+  finalExpressions.sort((a, b) => {
+    return b[0] - a[0];
   });
   return finalExpressions;
 }
 
 async function startVideo() {
+    // Normal face detector model just smaller and quicker for browser
     await faceapi.loadTinyFaceDetectorModel('/');
+    // Register different parts of your face (nose, mouth, eyes..)
     await faceapi.loadFaceLandmarkModel('/');
+    // Allows api to recognize where the face is and the box around it
     await faceapi.loadFaceRecognitionModel('/');
+    // Model responsible for actually identifing expressions (happy, sad, etc..)
     await faceapi.loadFaceExpressionModel('/');
+    // Model for identifing age and gender of the face
     await faceapi.nets.ageGenderNet.load('/');
     navigator.getUserMedia(
         { video: {} },
@@ -107,7 +115,7 @@ video.addEventListener('play', () => {
         expressionArr.forEach(express => {
           $('.expressions').append(
               $("<li>").append(
-                $("<span>").text(express)
+                $("<span>").text(express[1])
               )
             );
         });
