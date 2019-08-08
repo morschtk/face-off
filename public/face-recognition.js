@@ -27,7 +27,7 @@ async function createFaceMatcher() {
     })
   );
 
-  return new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6); // Distance threshold of two descriptors. The higher the distance the more unsimilar two faces can match.
+  return new faceapi.FaceMatcher(labeledFaceDescriptors, 0.64); // Distance threshold of two descriptors. The higher the distance the more unsimilar two faces can match.
 }
 
 async function startThatShit() {
