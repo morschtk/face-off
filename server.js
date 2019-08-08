@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, 'models')));
 // Stupid browsers and stupid favicon requirments 
 app.get('/favicon.ico', (req, res) => res.status(204));
 
-app.get('/', (req, res) => res.redirect('/whoAreYou'));
+app.get('/', (req, res) => res.redirect('/whoAmI'));
 app.get('/whoAreYou', (req, res) => res.sendFile(path.join(views_dir, 'who-are-you.html')));
 app.get('/whosTheStar', (req, res) => res.sendFile(path.join(views_dir, 'whos-the-star.html')));
 app.get('/whoAmI', (req, res) => res.sendFile(path.join(views_dir, 'who-am-i.html')));

@@ -16,7 +16,7 @@ async function createFaceMatcher() {
         const detections = await faceapi.detectSingleFace(img)
                                   .withFaceLandmarks()
                                   .withFaceDescriptor();
-        // Should we resize these detections to the image size?
+
         descriptors.push(detections.descriptor);
       }
       return new faceapi.LabeledFaceDescriptors(label, descriptors);
@@ -60,6 +60,7 @@ async function uploadImage(e) {
 
   resizedDetections.forEach(({ detection, descriptor }) => {
     // So what were doing here is passing the description for each face to the faceMatcher, which will return the label of the closest description it has in its bank.
+    // The descriptor from the detections is just a list of points plotting their face.
     const label = faceMatcher.findBestMatch(descriptor).toString();
     const options = { label };
     const drawBox = new faceapi.draw.DrawBox(detection.box, options);

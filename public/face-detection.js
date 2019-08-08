@@ -13,17 +13,17 @@ const EXPRESSION_MAP = {
   'surprised': '🙀'
 };
 
-function onChangeHideBoundingBoxes(e) {
+function onChangeHideBox(e) {
   withBoxes = !$(e.target).prop('checked')
 }
 
-function interpolateAgePredictions(age) {
+function avgAgePredictions(age) {
   predictedAges = [age].concat(predictedAges).slice(0, 30)
   const avgPredictedAge = predictedAges.reduce((total, a) => total + a) / predictedAges.length
   return avgPredictedAge
 }
 
-function interpolateGenderPredictions(gender) {
+function assumeGenders(gender) {
   predictedGenders = [gender].concat(predictedGenders).slice(0, 30)
   const avgPredictedAge = predictedGenders.reduce((total, a) => total + a) / predictedGenders.length
   return avgPredictedAge
@@ -68,27 +68,27 @@ async function startVideo() {
 
 video.addEventListener('play', () => {
     const canvas = $('#canvas').get(0);
-    // const canvas = faceapi.createCanvasFromMedia(video);
-    // $('.card-image').append(canvas);
-    // const displaySize = {
-    //     width: video.width,
-    //     height: video.height
-    // };
     faceapi.matchDimensions(canvas, video);
 
     setInterval(async () => {
-        // What is TinyFaceDetectorOptions
+        // detectSingleFace takes the image src and the type of library used to detect the faces
         // Here we're only geting landmarks not descriptors so we can pass directions right in?
         const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
                                     .withFaceLandmarks()
                                     .withAgeAndGender()
                                     .withFaceExpressions();
+      
+      // This is just to clear the 2D canvas of any elements currently inside it.
+      canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height);
       if (detections) {
+        // All this does is makes sure the boxes that show up around the faces are properly sized for the video and canvas elements.
         const resizedResult = faceapi.resizeResults(detections, video);
 
-        canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height);
+        // To make a ghost clear the canvas here instead....👻
+        // canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height);
+
         // The faceMatcher is what finds the closest match not the actual api.
-        // In this case the we dont need to loop through each dection to find best match.
+        // In this case the we dont need to loop through each detection to find best match.
         if (withBoxes) {
           faceapi.draw.drawDetections(canvas, resizedResult);
         }
@@ -98,8 +98,8 @@ video.addEventListener('play', () => {
         const { age, gender, genderProbability, expressions } = resizedResult;
         // interpolate gender predictions over last 30 frames
         // to make the displayed age more stable
-        const interpolatedAge = interpolateAgePredictions(age);
-        const interpolatedGender = interpolateGenderPredictions(genderProbability);
+        const interpolatedAge = avgAgePredictions(age);
+        const interpolatedGender = assumeGenders(genderProbability);
         const expressionArr = extractExpressions(expressions);
         // new faceapi.draw.DrawTextField(
         //     [
