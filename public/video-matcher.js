@@ -72,12 +72,11 @@ async function onPlay(videoEl) {
       $('.mylist').append($("<li>").append($("<span>", {class: `${personMeta.replace(' ', '')}`}).text(`${personMeta}: ${1}`)))
       bitches.set(personMeta, 1);
     }
-    // bitches.set(personMeta, (bitches.get(personMeta) || 0) + 1);
+
     const drawBox = new faceapi.draw.DrawBox(detection.box, options);
     drawBox.draw(canvas);
   });
   videoTimer = setTimeout(() => onPlay(videoEl));
-  // console.log(bitches);
 }
 
 async function resetVideo() {

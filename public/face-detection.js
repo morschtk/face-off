@@ -54,6 +54,7 @@ async function startVideo() {
     await faceapi.loadFaceExpressionModel('/');
     // Model for identifing age and gender of the face
     await faceapi.nets.ageGenderNet.load('/');
+    // get video object set to the webcam 
     navigator.getUserMedia(
         { video: {} },
         stream => video.srcObject = stream,
@@ -72,17 +73,21 @@ video.addEventListener('play', () => {
 
     setInterval(async () => {
         // detectSingleFace takes the image src and the type of library used to detect the faces
-        // Here we're only geting landmarks not descriptors so we can pass directions right in?
-        const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-                                    .withFaceLandmarks() // this returns detections, landmarks and other info about the faces
-                                    .withAgeAndGender()
-                                    .withFaceExpressions();
+        // We Pass new faceapi.TinyFaceDetectorOptions() because it uses a different models options by default
+
+        /** First thing we must do is detect your beautiful face by passig the video element to faceapi detectSingleFace  */
+
+
       
       // This is just to clear the 2D canvas of any elements currently inside it.
       canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height);
       if (detections) {
         // All this does is makes sure the boxes that show up around the faces are properly sized for the video and canvas elements.
         const resizedResult = faceapi.resizeResults(detections, video);
+        // What are resizedResult?! Well console log that boii and have a look!
+        if (predictedAges.length < 20) {
+          console.log('resizedResult', resizedResult);
+        }
 
         // To make a ghost clear the canvas here instead....👻
         // canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height);
@@ -92,12 +97,13 @@ video.addEventListener('play', () => {
         if (withBoxes) {
           faceapi.draw.drawDetections(canvas, resizedResult);
         }
-        faceapi.draw.drawFaceLandmarks(canvas, resizedResult);
+        /** Let faceapi draw those Landmarks for you! */
+        
+        // If we wanted the expressions on the box...
         // faceapi.draw.drawFaceExpressions(canvas, resizedResult);
 
         const { age, gender, genderProbability, expressions } = resizedResult;
-        // interpolate gender predictions over last 30 frames
-        // to make the displayed age more stable
+        // interpolate gender and age predictions over last 30 frames to make the displayed age more stable
         const interpolatedAge = avgAgePredictions(age);
         const interpolatedGender = assumeGenders(genderProbability);
         const expressionArr = extractExpressions(expressions);

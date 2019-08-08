@@ -15,15 +15,13 @@ async function createFaceMatcher() {
       for (let i=0; i<imagesForTraining.length; i++) {
         // This demonstrates actually retrieving each image required for faceapi to match against an uploaded image
         const img = await faceapi.fetchImage(`${label}/${imagesForTraining[i]}`);
-        // Create detections for each image and push to array of all that persons descriptors.
-        const detections = await faceapi.detectSingleFace(img)
-                                  .withFaceLandmarks()
-                                  .withFaceDescriptor();
+        
+        /** Create detections with descriptions for each image and push to array of all that persons descriptors. */
+        
 
-        descriptors.push(detections.descriptor);
       }
-      // create LabeledFaceDescriptors for that person.
-      return new faceapi.LabeledFaceDescriptors(label, descriptors);
+      /** return new LabeledFaceDescriptors for that person. */
+      
     })
   );
 
@@ -37,7 +35,9 @@ async function startThatShit() {
   // This is used to detect where the faces are and return their descriptions
   await faceapi.loadSsdMobilenetv1Model('/');
 
-  faceMatcher = await createFaceMatcher();
+  /** Dont do this yet dude just chill!!! */
+  // faceMatcher = await createFaceMatcher();
+
   $('#loader').hide();
   $('#content').css({
     'display': 'flex',
@@ -54,22 +54,26 @@ async function uploadImage(e) {
   const image = $('#image').get(0);
   const canvas = $('#canvas').get(0);
 
-  faceapi.matchDimensions(canvas, image);
+  /** oh no our canvas is never going to fit over the image perfectly */
 
-  const detections = await faceapi.detectAllFaces(image)
-                            .withFaceLandmarks()
-                            .withFaceDescriptors();
+
+
+  /**
+   * Same as last time we have to detect the faces from the uploaded image AND get they're descriptors
+   * Meow their might be more then one face in the uploaded file... END USERS CANT BE TRUSTED! 
+  */
+
 
   // resize detection and landmarks in case displayed image is smaller than original size
   const resizedDetections = faceapi.resizeResults(detections, image);
 
   resizedDetections.forEach(({ detection, descriptor }) => {
-    // So what were doing here is passing the description for each face to the faceMatcher, which will return the label of the closest description it has in its bank.
-    // The descriptor from the detections is just a list of points plotting their face.
-    const label = faceMatcher.findBestMatch(descriptor).toString();
-    const options = { label };
-    const drawBox = new faceapi.draw.DrawBox(detection.box, options);
-    drawBox.draw(canvas);
+    /** 
+     * So what were doing here is passing the description for each face to the faceMatcher, which will return the label of the closest description it has in its bank.
+     * The descriptor from the detections is just a list of points plotting their face.  
+    */
+   
+
   });
 }
 

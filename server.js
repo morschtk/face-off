@@ -23,6 +23,8 @@ app.get('/whoAreYou', (req, res) => res.sendFile(path.join(views_dir, 'who-are-y
 app.get('/whosTheStar', (req, res) => res.sendFile(path.join(views_dir, 'whos-the-star.html')));
 app.get('/whoAmI', (req, res) => res.sendFile(path.join(views_dir, 'who-am-i.html')));
 app.get('/whereMyPeopleAt', (req, res) => {
+    // This endpoint would probably be to a db to return this data but....
+    // Hey at least its not some lame static list!
     let labels = fs.readdirSync(img_dir);
     let theHomies = labels.map((label) => {
         let imagesForTraining = fs.readdirSync(path.join(img_dir, `${label}`));
