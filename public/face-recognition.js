@@ -2,6 +2,7 @@ let faceMatcher = null;
 
 async function createFaceMatcher() {
   let theHomies = [];
+  // Here we get our information for constructing the url to get the actual img.
   await $.get('/whereMyPeopleAt', (data) => {
     theHomies = data.theHomies;
   });
@@ -12,6 +13,7 @@ async function createFaceMatcher() {
       const { label, imagesForTraining } = homie;
       const descriptors = [];
       for (let i=0; i<imagesForTraining.length; i++) {
+        // This demonstrates actually retrieving each image required for faceapi to match against an uploaded image
         const img = await faceapi.fetchImage(`${label}/${imagesForTraining[i]}`);
         const detections = await faceapi.detectSingleFace(img)
                                   .withFaceLandmarks()
@@ -30,6 +32,7 @@ async function startThatShit() {
   // load face detection, face landmark model and face recognition models
   await faceapi.loadFaceRecognitionModel('/');
   await faceapi.loadFaceLandmarkModel('/');
+  // This is used to detect where the faces are and return their descriptions
   await faceapi.loadSsdMobilenetv1Model('/');
 
   faceMatcher = await createFaceMatcher();
@@ -42,7 +45,7 @@ async function startThatShit() {
 
 async function uploadImage(e) {
   const imgFile = $('#imageUpload').get(0).files[0];
-  // convert blob to htmlImageElement
+  // convert uploaded blob file to HTML ImageElement
   const img = await faceapi.bufferToImage(imgFile);
   $('#image').get(0).src = img.src;
 

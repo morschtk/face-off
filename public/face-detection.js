@@ -74,7 +74,7 @@ video.addEventListener('play', () => {
         // detectSingleFace takes the image src and the type of library used to detect the faces
         // Here we're only geting landmarks not descriptors so we can pass directions right in?
         const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-                                    .withFaceLandmarks()
+                                    .withFaceLandmarks() // this returns detections, landmarks and other info about the faces
                                     .withAgeAndGender()
                                     .withFaceExpressions();
       
