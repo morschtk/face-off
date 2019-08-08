@@ -15,17 +15,19 @@ async function createFaceMatcher() {
       for (let i=0; i<imagesForTraining.length; i++) {
         // This demonstrates actually retrieving each image required for faceapi to match against an uploaded image
         const img = await faceapi.fetchImage(`${label}/${imagesForTraining[i]}`);
+        // Create detections for each image and push to array of all that persons descriptors.
         const detections = await faceapi.detectSingleFace(img)
                                   .withFaceLandmarks()
                                   .withFaceDescriptor();
 
         descriptors.push(detections.descriptor);
       }
+      // create LabeledFaceDescriptors for that person.
       return new faceapi.LabeledFaceDescriptors(label, descriptors);
     })
   );
 
-  return new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
+  return new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6); // Distance threshold of two descriptors. The higher the distance the more unsimilar two faces can match.
 }
 
 async function startThatShit() {
